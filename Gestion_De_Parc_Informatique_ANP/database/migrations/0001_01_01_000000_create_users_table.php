@@ -17,8 +17,11 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('role', ['admin', 'user'])->default('user'); // Role-based access
+            $table->enum('status', ['pending', 'approved'])->default('pending'); // Admin approval required
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes(); // For user deactivation instead of hard delete
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
